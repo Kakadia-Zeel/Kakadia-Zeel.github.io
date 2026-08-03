@@ -2,128 +2,52 @@
 import { site, sections } from '../data/site';
 import Icon from './Icon.astro';
 import SectionHeader from './SectionHeader.astro';
-
 const s = sections.contact;
-const configured = site.web3formsKey && site.web3formsKey !== 'YOUR_WEB3FORMS_ACCESS_KEY';
 ---
 
 <section id="contact" class="py-20 sm:py-28">
   <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="glass rounded-3xl p-6 sm:p-10 lg:p-14 overflow-hidden relative">
-      <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl opacity-40"
+    <div class="glass rounded-3xl p-6 sm:p-10 lg:p-14 overflow-hidden relative text-center">
+      <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl opacity-40 pointer-events-none"
         style="background:radial-gradient(circle,rgba(251, 113, 133,.5),transparent 60%);"></div>
+      <div class="absolute -bottom-28 -left-24 w-72 h-72 rounded-full blur-3xl opacity-30 pointer-events-none"
+        style="background:radial-gradient(circle,rgba(251, 191, 36,.4),transparent 60%);"></div>
 
-      <div class="relative grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-        <!-- Left: pitch + direct links -->
-        <div>
-          <SectionHeader kicker={s.kicker} title={s.title} desc={s.desc} />
-
-          <div class="reveal mt-8 space-y-3">
-            <a href={`mailto:${site.email}`} class="glass glass-hover rounded-xl p-4 flex items-center gap-4 group">
-              <span class="w-10 h-10 grid place-items-center rounded-lg text-[color:var(--color-accent-cyan)]" style="background:rgba(251, 191, 36,.08);">
-                <Icon name="mail" class="w-5 h-5" />
-              </span>
-              <span>
-                <span class="block text-xs text-[color:var(--color-fg-dim)] font-mono">Email</span>
-                <span class="text-fg group-hover:text-[color:var(--color-accent-cyan)] transition-colors">{site.email}</span>
-              </span>
-            </a>
-
-            <div class="grid grid-cols-3 gap-3">
-              <a aria-label="GitHub" href={site.links.github} target="_blank" rel="noopener" class="glass glass-hover rounded-xl p-4 grid place-items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
-                <Icon name="github" class="w-5 h-5" /><span class="text-xs font-mono">GitHub</span>
-              </a>
-              <a aria-label="LinkedIn" href={site.links.linkedin} target="_blank" rel="noopener" class="glass glass-hover rounded-xl p-4 grid place-items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
-                <Icon name="linkedin" class="w-5 h-5" /><span class="text-xs font-mono">LinkedIn</span>
-              </a>
-              <a aria-label="LeetCode" href={site.links.leetcode} target="_blank" rel="noopener" class="glass glass-hover rounded-xl p-4 grid place-items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
-                <Icon name="leetcode" class="w-5 h-5" /><span class="text-xs font-mono">LeetCode</span>
-              </a>
-            </div>
-          </div>
+      <div class="relative max-w-2xl mx-auto flex flex-col items-center">
+        <div class="reveal flex flex-col items-center">
+          <span class="kicker justify-center">{s.kicker}</span>
+          <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">{s.title}</h2>
+          <p class="mt-4 text-[color:var(--color-fg-muted)] text-base sm:text-lg leading-relaxed">{s.desc}</p>
         </div>
 
-        <!-- Right: form -->
-        <div class="reveal">
-          <form id="contact-form" class="glass rounded-2xl p-6 space-y-4">
-            <input type="hidden" name="access_key" value={site.web3formsKey} />
-            <input type="hidden" name="subject" value={`New message from your portfolio — ${site.name}`} />
-            <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+        <!-- Primary email CTA -->
+        <a href={`mailto:${site.email}`} class="reveal btn btn-primary mt-8 !px-6">
+          <Icon name="mail" class="w-4 h-4" /> Email me
+        </a>
+        <a href={`mailto:${site.email}`} class="reveal mt-3 text-sm font-mono text-[color:var(--color-fg-muted)] hover:text-fg transition-colors break-all">
+          {site.email}
+        </a>
 
-            <div>
-              <label for="name" class="block text-xs font-mono text-[color:var(--color-fg-dim)] mb-1.5">Name</label>
-              <input id="name" name="name" type="text" required placeholder="Your name"
-                class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-fg placeholder:text-[color:var(--color-fg-dim)] focus:border-[color:var(--color-accent-cyan)] focus:outline-none transition-colors" />
-            </div>
-            <div>
-              <label for="email" class="block text-xs font-mono text-[color:var(--color-fg-dim)] mb-1.5">Email</label>
-              <input id="email" name="email" type="email" required placeholder="you@company.com"
-                class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-fg placeholder:text-[color:var(--color-fg-dim)] focus:border-[color:var(--color-accent-cyan)] focus:outline-none transition-colors" />
-            </div>
-            <div>
-              <label for="message" class="block text-xs font-mono text-[color:var(--color-fg-dim)] mb-1.5">Message</label>
-              <textarea id="message" name="message" required rows="4" placeholder="Tell me about the role or project…"
-                class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-fg placeholder:text-[color:var(--color-fg-dim)] focus:border-[color:var(--color-accent-cyan)] focus:outline-none transition-colors resize-y"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-full">
-              <Icon name="mail" class="w-4 h-4" /> Send message
-            </button>
-
-            <p id="form-status" class="text-sm text-center min-h-[1.25rem]" aria-live="polite"></p>
-
-            {!configured && (
-              <p class="text-xs text-center text-[color:var(--color-fg-dim)] font-mono">
-                ⓘ Add your free Web3Forms key in <span class="text-[color:var(--color-accent-cyan)]">src/data/site.ts</span> to enable sending.
-              </p>
-            )}
-          </form>
+        <!-- Social links -->
+        <div class="reveal mt-6 flex flex-wrap items-center justify-center gap-3">
+          <a aria-label="GitHub" href={site.links.github} target="_blank" rel="noopener"
+            class="glass glass-hover spotlight rounded-xl px-4 py-3 flex items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
+            <Icon name="github" class="w-5 h-5" /><span class="text-sm font-mono">GitHub</span>
+          </a>
+          <a aria-label="LinkedIn" href={site.links.linkedin} target="_blank" rel="noopener"
+            class="glass glass-hover spotlight rounded-xl px-4 py-3 flex items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
+            <Icon name="linkedin" class="w-5 h-5" /><span class="text-sm font-mono">LinkedIn</span>
+          </a>
+          <a aria-label="LeetCode" href={site.links.leetcode} target="_blank" rel="noopener"
+            class="glass glass-hover spotlight rounded-xl px-4 py-3 flex items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
+            <Icon name="leetcode" class="w-5 h-5" /><span class="text-sm font-mono">LeetCode</span>
+          </a>
+          <a aria-label="Résumé" href={site.links.resume} target="_blank" rel="noopener"
+            class="glass glass-hover spotlight rounded-xl px-4 py-3 flex items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
+            <Icon name="download" class="w-5 h-5" /><span class="text-sm font-mono">Résumé</span>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<script define:vars={{ configured }}>
-  const form = document.getElementById('contact-form');
-  const status = document.getElementById('form-status');
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!configured) {
-      status.textContent = 'Form not configured yet — email me directly for now.';
-      status.style.color = 'var(--color-fg-muted)';
-      return;
-    }
-    const btn = form.querySelector('button[type="submit"]');
-    const original = btn.innerHTML;
-    btn.disabled = true;
-    btn.style.opacity = '0.7';
-    status.textContent = 'Sending…';
-    status.style.color = 'var(--color-fg-muted)';
-
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form),
-      });
-      const data = await res.json();
-      if (data.success) {
-        status.textContent = '✓ Thanks! Your message is on its way.';
-        status.style.color = '#34d399';
-        form.reset();
-      } else {
-        status.textContent = data.message || 'Something went wrong — please email me directly.';
-        status.style.color = '#f87171';
-      }
-    } catch {
-      status.textContent = 'Network error — please email me directly.';
-      status.style.color = '#f87171';
-    } finally {
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      btn.innerHTML = original;
-    }
-  });
-</script>

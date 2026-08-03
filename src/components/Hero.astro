@@ -16,7 +16,7 @@ import HeroGraph from './HeroGraph.astro';
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
               </span>
-              Available for remote work & freelance
+              Available for opportunities
             </span>
           )
         }
@@ -81,14 +81,16 @@ import HeroGraph from './HeroGraph.astro';
     </div>
   </div>
 
-  <!-- Tech banner: static grid with a glow "wave" rippling through the pills -->
-  <div class="mt-16 flex flex-wrap justify-center gap-2.5 max-w-4xl mx-auto px-2">
-    {
-      techMarquee.map((t, i) => (
-        <span class="tech-pill" style={`--i:${i}`}>
-          {t}
-        </span>
-      ))
-    }
+  <!-- Tech banner: moving marquee of pills with a glow "wave" ripple -->
+  <div class="mt-16 marquee-mask overflow-hidden" aria-hidden="true">
+    <div class="marquee">
+      {
+        [...techMarquee, ...techMarquee].map((t, i) => (
+          <span class="tech-pill whitespace-nowrap" style={`--i:${i % techMarquee.length}`}>
+            {t}
+          </span>
+        ))
+      }
+    </div>
   </div>
 </section>

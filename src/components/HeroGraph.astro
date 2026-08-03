@@ -56,8 +56,8 @@ const initial = sats.map((_, i) => techMarquee[i % techMarquee.length]);
             x2={p2.x}
             y2={p2.y}
             stroke="url(#edge)"
-            stroke-width={e.hub ? 1.2 : 1}
-            stroke-opacity={e.hub ? 0.35 : 0.12}
+            stroke-width="1.1"
+            stroke-opacity="0.06"
           />
         );
       })
@@ -116,15 +116,20 @@ const initial = sats.map((_, i) => techMarquee[i % techMarquee.length]);
 
     // Edge relation state: current + target opacity for smooth rewiring.
     const edges = edgeEls.map((el) => {
-      const hub = el.dataset.a === '6';
       const o = parseFloat(el.getAttribute('stroke-opacity'));
-      return { el, a: +el.dataset.a, b: +el.dataset.b, hub, cur: o, target: o };
+      return { el, a: +el.dataset.a, b: +el.dataset.b, cur: o, target: o };
     });
-    const nonHub = edges.filter((e) => !e.hub);
+
+    // Only a few relations are "open" at once → an open-ended, sparse graph
+    // (some vertices are left unconnected and it keeps re-wiring).
+    const K = 4;
+    const activeSet = new Set();
+    while (activeSet.size < K) activeSet.add(Math.floor(Math.random() * edges.length));
+    const applyTargets = () => edges.forEach((e, i) => (e.target = activeSet.has(i) ? 0.55 : 0.05));
+    applyTargets();
 
     let active = 0;
     let ptr = N;
-    let edgeStart = 0;
 
     const setActive = (idx) => {
       satEls.forEach((el, i) => el.classList.toggle('is-active', i === idx));
@@ -132,11 +137,14 @@ const initial = sats.map((_, i) => techMarquee[i % techMarquee.length]);
     };
     setActive(0);
 
-    // Rewire relations + cycle a label/highlight every ~1.9s.
+    // Rewire: drop one open relation, open a new one → gradual, open-ended change.
     const rewire = () => {
-      nonHub.forEach((e) => (e.target = 0.05));
-      edgeStart = (edgeStart + 2) % nonHub.length;
-      for (let k = 0; k < 4; k++) nonHub[(edgeStart + k) % nonHub.length].target = 0.5;
+      const act = [...activeSet];
+      activeSet.delete(act[Math.floor(Math.random() * act.length)]);
+      const inactive = [];
+      for (let i = 0; i < edges.length; i++) if (!activeSet.has(i)) inactive.push(i);
+      activeSet.add(inactive[Math.floor(Math.random() * inactive.length)]);
+      applyTargets();
 
       active = (active + 1) % N;
       labelEls[active].textContent = techs[ptr % techs.length];

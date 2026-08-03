@@ -9,7 +9,7 @@ export const site = {
   role: 'Backend Engineer → AI/ML',
   tagline:
     'I build reliable, high-performance backend & data systems — now applying that same rigor to AI/ML.',
-  location: 'Rajkot, Gujarat, India · Open to remote',
+  location: 'India · Open to remote',
   available: true,
   email: 'zeelkakadia.work@gmail.com',
   phone: '+91 84014 00716',
