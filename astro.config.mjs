@@ -2,9 +2,10 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Update `site` to your real deployed URL (used for canonical, sitemap, OG tags).
+// `site` is the deployed URL (used for canonical, sitemap, OG tags).
+// Root user-pages site, so no `base` path is needed.
 export default defineConfig({
-  site: 'https://zeelkakadia.vercel.app',
+  site: 'https://kakadia-zeel.github.io',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

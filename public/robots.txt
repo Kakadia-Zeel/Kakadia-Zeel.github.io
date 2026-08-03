@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zeelkakadia.vercel.app/sitemap-index.xml
+Sitemap: https://kakadia-zeel.github.io/sitemap-index.xml
