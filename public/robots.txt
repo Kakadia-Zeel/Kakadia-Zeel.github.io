@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zeelkakadia.vercel.app/sitemap-index.xml

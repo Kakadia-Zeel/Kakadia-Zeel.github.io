@@ -1,0 +1,28 @@
+---
+import { skillGroups, sections } from '../data/site';
+import SectionHeader from './SectionHeader.astro';
+const s = sections.skills;
+---
+
+<section id="skills" class="py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <SectionHeader kicker={s.kicker} title={s.title} desc={s.desc} />
+
+    <div class="reveal mt-10 grid sm:grid-cols-2 gap-4 sm:gap-5">
+      {
+        skillGroups.map((group) => (
+          <div class="glass glass-hover spotlight rounded-2xl p-6">
+            <h3 class="font-mono text-sm text-[color:var(--color-accent-cyan)] uppercase tracking-wider">
+              {group.title}
+            </h3>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <span class="chip">{item}</span>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+import { site, nav } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<footer class="border-t border-white/8 mt-10">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-10">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="text-center sm:text-left">
+        <a href="#top" class="font-mono font-bold text-fg">zeelkakadia<span class="accent-text">.dev</span></a>
+        <p class="mt-1 text-sm text-[color:var(--color-fg-dim)]">
+          © {new Date().getFullYear()} {site.name}. Built with Astro + Tailwind.
+        </p>
+      </div>
+
+      <nav class="flex flex-wrap justify-center gap-x-5 gap-y-2">
+        {
+          nav.map((item) => (
+            <a href={item.href} class="text-sm text-[color:var(--color-fg-muted)] hover:text-fg transition-colors">
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <a aria-label="GitHub" href={site.links.github} target="_blank" rel="noopener" class="glass glass-hover w-9 h-9 grid place-items-center rounded-lg text-[color:var(--color-fg-muted)] hover:text-fg">
+          <Icon name="github" class="w-4 h-4" />
+        </a>
+        <a aria-label="LinkedIn" href={site.links.linkedin} target="_blank" rel="noopener" class="glass glass-hover w-9 h-9 grid place-items-center rounded-lg text-[color:var(--color-fg-muted)] hover:text-fg">
+          <Icon name="linkedin" class="w-4 h-4" />
+        </a>
+        <a aria-label="Email" href={`mailto:${site.email}`} class="glass glass-hover w-9 h-9 grid place-items-center rounded-lg text-[color:var(--color-fg-muted)] hover:text-fg">
+          <Icon name="mail" class="w-4 h-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

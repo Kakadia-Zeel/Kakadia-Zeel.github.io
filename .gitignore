@@ -1,0 +1,17 @@
+# build output
+dist/
+.output/
+
+# dependencies
+node_modules/
+
+# astro
+.astro/
+
+# environment / editor
+.env
+.env.production
+.DS_Store
+*.log
+.vscode/
+.idea/

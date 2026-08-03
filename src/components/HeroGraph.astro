@@ -1,0 +1,208 @@
+---
+import { techMarquee } from '../data/site';
+
+// A living graph: 6 satellite vertices drift gently, the relations (edges)
+// keep rewiring, and the vertex labels cycle through the tech stack.
+// All motion is driven by the client script below (one small rAF loop,
+// paused when the graph scrolls out of view). Static + labelled for no-JS/SEO.
+const C = { x: 200, y: 190 };
+const R = 128;
+// 6 vertices evenly around the hub, starting at top.
+const sats = Array.from({ length: 6 }, (_, i) => {
+  const a = -Math.PI / 2 + (i * Math.PI * 2) / 6;
+  return { x: +(C.x + R * Math.cos(a)).toFixed(1), y: +(C.y + R * Math.sin(a)).toFixed(1) };
+});
+// Candidate relations: hub↔each vertex, the ring, and 3 diagonals. 6 = hub.
+const edges = [
+  ...sats.map((_, i) => ({ a: 6, b: i, hub: true })),
+  ...sats.map((_, i) => ({ a: i, b: (i + 1) % 6, hub: false })),
+  { a: 0, b: 3, hub: false },
+  { a: 1, b: 4, hub: false },
+  { a: 2, b: 5, hub: false },
+];
+const labelY = (y: number) => (y < C.y ? y - 15 : y + 25);
+const initial = sats.map((_, i) => techMarquee[i % techMarquee.length]);
+---
+
+<div class="glass spotlight rounded-[1.75rem] p-4 w-full max-w-md aspect-square relative overflow-hidden">
+  <div class="absolute inset-0 opacity-50"
+    style="background:radial-gradient(120% 100% at 50% 0%, rgba(79,140,255,.16), transparent 60%);"></div>
+
+  <svg id="hero-graph" viewBox="0 0 400 380" class="w-full h-full relative" role="img"
+    aria-label="Living graph cycling through technologies Zeel works with">
+    <defs>
+      <radialGradient id="hub" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#67e8f9" />
+        <stop offset="1" stop-color="#4f8cff" />
+      </radialGradient>
+      <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#22d3ee" />
+        <stop offset="1" stop-color="#a855f7" />
+      </linearGradient>
+    </defs>
+
+    <!-- relations (edges) -->
+    {
+      edges.map((e) => {
+        const p1 = e.a === 6 ? C : sats[e.a];
+        const p2 = e.b === 6 ? C : sats[e.b];
+        return (
+          <line
+            class="g-edge"
+            data-a={e.a}
+            data-b={e.b}
+            x1={p1.x}
+            y1={p1.y}
+            x2={p2.x}
+            y2={p2.y}
+            stroke="url(#edge)"
+            stroke-width={e.hub ? 1.2 : 1}
+            stroke-opacity={e.hub ? 0.35 : 0.12}
+          />
+        );
+      })
+    }
+
+    <!-- vertices + cycling labels -->
+    {
+      sats.map((n, i) => (
+        <g>
+          <circle class="g-sat" data-slot={i} cx={n.x} cy={n.y} r="7" fill="#9aa1b4" stroke="rgba(255,255,255,.25)" stroke-width="1" />
+          <text
+            class="g-label"
+            data-slot={i}
+            x={n.x}
+            y={labelY(n.y)}
+            text-anchor="middle"
+            font-family="'JetBrains Mono', monospace"
+            font-size="12"
+          >
+            {initial[i]}
+          </text>
+        </g>
+      ))
+    }
+
+    <!-- hub -->
+    <circle class="g-node" cx={C.x} cy={C.y} r="12" fill="url(#hub)" stroke="#67e8f9" stroke-width="2" />
+    <circle cx={C.x} cy={C.y} r="20" fill="none" stroke="#4f8cff" stroke-opacity="0.3" />
+  </svg>
+</div>
+
+<script is:inline define:vars={{ techs: techMarquee, CX: C.x, CY: C.y, base: sats }}>
+  (function () {
+    const svg = document.getElementById('hero-graph');
+    if (!svg) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const satEls = Array.from(svg.querySelectorAll('.g-sat'));
+    const labelEls = Array.from(svg.querySelectorAll('.g-label'));
+    const edgeEls = Array.from(svg.querySelectorAll('.g-edge'));
+    const N = satEls.length;
+    if (!N) return;
+
+    // Per-vertex drift parameters (gentle float).
+    const drift = base.map((_, i) => ({
+      ax: 6 + (i % 3) * 2,
+      ay: 6 + (i % 2) * 3,
+      sx: 0.5 + i * 0.08,
+      sy: 0.4 + i * 0.06,
+      px: i * 1.7,
+      py: i * 2.3,
+    }));
+    const pos = base.map((p) => ({ x: p.x, y: p.y }));
+    const getPt = (idx) => (idx === 6 ? { x: CX, y: CY } : pos[idx]);
+    const labelBaseAbove = base.map((p) => p.y < CY);
+
+    // Edge relation state: current + target opacity for smooth rewiring.
+    const edges = edgeEls.map((el) => {
+      const hub = el.dataset.a === '6';
+      const o = parseFloat(el.getAttribute('stroke-opacity'));
+      return { el, a: +el.dataset.a, b: +el.dataset.b, hub, cur: o, target: o };
+    });
+    const nonHub = edges.filter((e) => !e.hub);
+
+    let active = 0;
+    let ptr = N;
+    let edgeStart = 0;
+
+    const setActive = (idx) => {
+      satEls.forEach((el, i) => el.classList.toggle('is-active', i === idx));
+      labelEls.forEach((el, i) => el.classList.toggle('is-active', i === idx));
+    };
+    setActive(0);
+
+    // Rewire relations + cycle a label/highlight every ~1.9s.
+    const rewire = () => {
+      nonHub.forEach((e) => (e.target = 0.05));
+      edgeStart = (edgeStart + 2) % nonHub.length;
+      for (let k = 0; k < 4; k++) nonHub[(edgeStart + k) % nonHub.length].target = 0.5;
+
+      active = (active + 1) % N;
+      labelEls[active].textContent = techs[ptr % techs.length];
+      ptr++;
+      setActive(active);
+    };
+
+    if (reduce) {
+      rewire(); // one static rewire, no loop
+      return;
+    }
+
+    let raf = 0;
+    let timer = 0;
+    let t0 = 0;
+
+    const frame = (now) => {
+      if (!t0) t0 = now;
+      const t = (now - t0) / 1000;
+
+      // drift vertices
+      for (let i = 0; i < N; i++) {
+        const d = drift[i];
+        pos[i].x = base[i].x + Math.sin(t * d.sx + d.px) * d.ax;
+        pos[i].y = base[i].y + Math.cos(t * d.sy + d.py) * d.ay;
+        satEls[i].setAttribute('cx', pos[i].x.toFixed(1));
+        satEls[i].setAttribute('cy', pos[i].y.toFixed(1));
+        labelEls[i].setAttribute('x', pos[i].x.toFixed(1));
+        labelEls[i].setAttribute('y', (labelBaseAbove[i] ? pos[i].y - 15 : pos[i].y + 25).toFixed(1));
+      }
+
+      // update edge endpoints + ease opacity toward target
+      for (const e of edges) {
+        const p1 = getPt(e.a);
+        const p2 = getPt(e.b);
+        e.el.setAttribute('x1', p1.x.toFixed(1));
+        e.el.setAttribute('y1', p1.y.toFixed(1));
+        e.el.setAttribute('x2', p2.x.toFixed(1));
+        e.el.setAttribute('y2', p2.y.toFixed(1));
+        e.cur += (e.target - e.cur) * 0.08;
+        e.el.setAttribute('stroke-opacity', e.cur.toFixed(3));
+      }
+
+      raf = requestAnimationFrame(frame);
+    };
+
+    const start = () => {
+      if (!raf) raf = requestAnimationFrame(frame);
+      if (!timer) timer = window.setInterval(rewire, 1900);
+    };
+    const stop = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+      clearInterval(timer);
+      timer = 0;
+    };
+
+    // Only animate while the graph is on-screen (saves CPU).
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        (entries) => entries.forEach((en) => (en.isIntersecting ? start() : stop())),
+        { threshold: 0.05 }
+      ).observe(svg);
+    } else {
+      start();
+    }
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+  })();
+</script>

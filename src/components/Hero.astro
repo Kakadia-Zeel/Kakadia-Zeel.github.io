@@ -1,0 +1,94 @@
+---
+import { site, techMarquee } from '../data/site';
+import Icon from './Icon.astro';
+import HeroGraph from './HeroGraph.astro';
+---
+
+<section id="top" class="relative min-h-screen flex flex-col justify-center pt-28 pb-10">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 w-full">
+    <div class="grid lg:grid-cols-[1.35fr_1fr] gap-10 lg:gap-14 items-center">
+      <!-- Left: copy -->
+      <div class="reveal">
+        {
+          site.available && (
+            <span class="inline-flex items-center gap-2 chip mb-6">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
+              Available for remote work & freelance
+            </span>
+          )
+        }
+
+        <h1 class="text-4xl sm:text-6xl lg:text-[4.25rem] font-bold leading-[1.05] tracking-tight">
+          {site.name}
+        </h1>
+        <p class="mt-4 text-xl sm:text-2xl font-semibold">
+          <span class="accent-text">Backend Engineer</span>
+          <span class="text-[color:var(--color-fg-dim)] mx-1">→</span>
+          <span class="accent-text">AI / ML</span>
+        </p>
+
+        <p class="mt-6 text-base sm:text-lg text-[color:var(--color-fg-muted)] max-w-xl leading-relaxed">
+          {site.tagline}
+        </p>
+
+        <p class="mt-4 flex items-center gap-2 text-sm text-[color:var(--color-fg-dim)] font-mono">
+          <Icon name="location" class="w-4 h-4" />
+          {site.location}
+        </p>
+
+        <!-- CTAs -->
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a href="#contact" class="btn btn-primary">
+            <Icon name="mail" class="w-4 h-4" /> Hire me
+          </a>
+          <a href={site.links.resume} target="_blank" rel="noopener" class="btn btn-ghost">
+            <Icon name="download" class="w-4 h-4" /> Download CV
+          </a>
+        </div>
+
+        <!-- Socials -->
+        <div class="mt-8 flex items-center gap-3">
+          <a aria-label="GitHub" href={site.links.github} target="_blank" rel="noopener"
+            class="glass glass-hover w-11 h-11 grid place-items-center rounded-xl text-[color:var(--color-fg-muted)] hover:text-fg">
+            <Icon name="github" class="w-5 h-5" />
+          </a>
+          <a aria-label="LinkedIn" href={site.links.linkedin} target="_blank" rel="noopener"
+            class="glass glass-hover w-11 h-11 grid place-items-center rounded-xl text-[color:var(--color-fg-muted)] hover:text-fg">
+            <Icon name="linkedin" class="w-5 h-5" />
+          </a>
+          <a aria-label="LeetCode" href={site.links.leetcode} target="_blank" rel="noopener"
+            class="glass glass-hover w-11 h-11 grid place-items-center rounded-xl text-[color:var(--color-fg-muted)] hover:text-fg">
+            <Icon name="leetcode" class="w-5 h-5" />
+          </a>
+          <a aria-label="Email" href={`mailto:${site.email}`}
+            class="glass glass-hover w-11 h-11 grid place-items-center rounded-xl text-[color:var(--color-fg-muted)] hover:text-fg">
+            <Icon name="mail" class="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: animated graph -->
+      <div class="reveal justify-self-center lg:justify-self-end w-full max-w-md relative">
+        <div class="absolute -inset-4 rounded-[2rem] blur-2xl opacity-50"
+          style="background:linear-gradient(120deg,rgba(34,211,238,.3),rgba(168,85,247,.3));"></div>
+        <div class="relative">
+          <HeroGraph />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech banner: static grid with a glow "wave" rippling through the pills -->
+  <div class="mt-16 flex flex-wrap justify-center gap-2.5 max-w-4xl mx-auto px-2">
+    {
+      techMarquee.map((t, i) => (
+        <span class="tech-pill" style={`--i:${i}`}>
+          {t}
+        </span>
+      ))
+    }
+  </div>
+</section>
