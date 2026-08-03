@@ -20,9 +20,9 @@
   --color-ink-800: #12151f;
 
   /* Neon accent (cyan -> violet) */
-  --color-accent-cyan: #22d3ee;
-  --color-accent-blue: #4f8cff;
-  --color-accent-violet: #a855f7;
+  --color-accent-cyan: #fbbf24;
+  --color-accent-blue: #fb923c;
+  --color-accent-violet: #fb7185;
 
   --color-fg: #e8eaf2;
   --color-fg-muted: #9aa1b4;
@@ -53,8 +53,8 @@ body {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(60rem 40rem at 12% -10%, rgba(79, 140, 255, 0.10), transparent 60%),
-    radial-gradient(50rem 35rem at 100% 0%, rgba(168, 85, 247, 0.08), transparent 55%);
+    radial-gradient(60rem 40rem at 12% -10%, rgba(251, 146, 60, 0.10), transparent 60%),
+    radial-gradient(50rem 35rem at 100% 0%, rgba(251, 113, 133, 0.08), transparent 55%);
 }
 
 /* Subtle dot grid overlay */
@@ -90,7 +90,7 @@ body {
   }
   .glass-hover:hover {
     transform: translateY(-2px);
-    border-color: rgba(79, 140, 255, 0.28);
+    border-color: rgba(251, 146, 60, 0.28);
     background: rgba(255, 255, 255, 0.05);
   }
 
@@ -116,8 +116,8 @@ body {
   }
   .chip:hover {
     color: var(--color-fg);
-    border-color: rgba(34, 211, 238, 0.5);
-    background: rgba(34, 211, 238, 0.08);
+    border-color: rgba(251, 191, 36, 0.5);
+    background: rgba(251, 191, 36, 0.08);
   }
 
   .btn {
@@ -135,11 +135,11 @@ body {
   .btn-primary {
     color: #05060a;
     background: linear-gradient(100deg, var(--color-accent-cyan), var(--color-accent-blue) 55%, var(--color-accent-violet));
-    box-shadow: 0 8px 30px -8px rgba(79, 140, 255, 0.6);
+    box-shadow: 0 8px 30px -8px rgba(251, 146, 60, 0.6);
   }
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 38px -8px rgba(79, 140, 255, 0.75);
+    box-shadow: 0 12px 38px -8px rgba(251, 146, 60, 0.75);
   }
   .btn-ghost {
     color: var(--color-fg);
@@ -207,7 +207,7 @@ body {
   border-radius: inherit;
   opacity: 0;
   transition: opacity 0.25s ease;
-  background: radial-gradient(210px circle at var(--mx, 50%) var(--my, 50%), rgba(56, 189, 248, 0.14), transparent 62%);
+  background: radial-gradient(210px circle at var(--mx, 50%) var(--my, 50%), rgba(251, 191, 36, 0.14), transparent 62%);
   pointer-events: none;
 }
 .spotlight:hover::before {
@@ -232,8 +232,8 @@ body {
 .tech-pill:hover {
   animation-play-state: paused;
   color: var(--color-fg);
-  border-color: rgba(34, 211, 238, 0.55);
-  background: rgba(34, 211, 238, 0.08);
+  border-color: rgba(251, 191, 36, 0.55);
+  background: rgba(251, 191, 36, 0.08);
 }
 @keyframes pillWave {
   0%, 100% {
@@ -242,9 +242,9 @@ body {
     box-shadow: none;
   }
   50% {
-    border-color: rgba(34, 211, 238, 0.4);
+    border-color: rgba(251, 191, 36, 0.4);
     color: var(--color-fg);
-    box-shadow: 0 0 16px -6px rgba(34, 211, 238, 0.55);
+    box-shadow: 0 0 16px -6px rgba(251, 191, 36, 0.55);
   }
 }
 
@@ -261,7 +261,7 @@ body {
 }
 .g-sat.is-active {
   fill: url(#hub);
-  stroke: #67e8f9;
+  stroke: #fcd34d;
   r: 10;
 }
 .g-label {
@@ -269,7 +269,7 @@ body {
   transition: fill 0.4s ease;
 }
 .g-label.is-active {
-  fill: #67e8f9;
+  fill: #fcd34d;
   font-weight: 700;
 }
 
