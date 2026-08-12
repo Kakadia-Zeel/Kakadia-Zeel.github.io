@@ -5,39 +5,26 @@ import SectionHeader from './SectionHeader.astro';
 const s = sections.projects;
 ---
 
-<section id="projects" class="py-20 sm:py-28">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+<section id="projects" class="py-20 sm:py-28 border-t" style="border-color:var(--border);">
+  <div class="mx-auto max-w-5xl px-5 sm:px-6">
     <SectionHeader kicker={s.kicker} title={s.title} desc={s.desc} />
 
-    <div class="mt-10 grid sm:grid-cols-2 gap-4 sm:gap-5">
+    <div class="mt-10 grid sm:grid-cols-2 gap-5">
       {
         sideProjects.map((p) => (
-          <article class="glass glass-hover spotlight rounded-2xl p-6 flex flex-col group">
-            <div class="flex items-start justify-between gap-4">
-              <span
-                class="w-12 h-12 rounded-xl grid place-items-center text-[color:var(--color-accent-cyan)] shrink-0"
-                style="background:rgba(251, 191, 36,.08);border:1px solid rgba(251, 191, 36,.2);"
-              >
-                <Icon name={p.icon} class="w-6 h-6" />
-              </span>
+          <article class="card card-hover p-6 flex flex-col group">
+            <div class="flex items-start justify-between">
+              <h3 class="text-lg font-semibold font-display group-hover:accent transition-colors">{p.title}</h3>
               {p.link && (
-                <a href={p.link} target="_blank" rel="noopener" aria-label="Open project"
-                  class="text-[color:var(--color-fg-dim)] hover:text-[color:var(--color-accent-cyan)] transition-colors">
+                <a href={p.link} target="_blank" rel="noopener" aria-label="Open project" class="dim hover:accent transition-colors">
                   <Icon name="arrow" class="w-5 h-5" />
                 </a>
               )}
             </div>
-
-            <h3 class="mt-5 text-lg font-semibold text-fg group-hover:text-[color:var(--color-accent-cyan)] transition-colors">
-              {p.title}
-            </h3>
-            <p class="mt-2 text-sm text-[color:var(--color-fg-muted)] leading-relaxed flex-1">{p.blurb}</p>
-
-            <div class="mt-4 flex flex-wrap gap-1.5">
+            <p class="mt-2 muted text-sm leading-relaxed flex-1">{p.blurb}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
               {p.tags.map((t) => (
-                <span class="font-mono text-[0.7rem] px-2 py-1 rounded-md bg-white/5 border border-white/8 text-[color:var(--color-fg-dim)]">
-                  {t}
-                </span>
+                <span class="tag !text-xs !py-1 !px-2.5">{t}</span>
               ))}
             </div>
           </article>

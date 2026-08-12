@@ -1,102 +1,103 @@
 ---
 import { site, nav } from '../data/site';
-import Avatar from './Avatar.astro';
 import Icon from './Icon.astro';
 ---
 
-<header class="fixed top-0 inset-x-0 z-50">
-  <nav class="mx-auto max-w-6xl px-4 sm:px-6 mt-3">
-    <div class="glass glass-blur rounded-2xl px-3 sm:px-5 py-2.5 flex items-center justify-between">
-      <a href="#top" class="font-mono font-bold tracking-tight text-fg flex items-center gap-2.5">
-        <Avatar id="logo" class="w-9 h-9 shrink-0" />
-        <span class="text-sm sm:text-base">zeelkakadia<span class="accent-text">.dev</span></span>
+<header
+  class="fixed top-0 inset-x-0 z-50"
+  style="background:color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--border);"
+>
+  <nav class="mx-auto max-w-5xl px-5 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="font-display font-semibold tracking-tight text-[1.05rem]">
+      Zeel Kakadia<span class="accent">.</span>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-7 text-sm">
+      {nav.map((item) => <a href={item.href} class="ulink">{item.label}</a>)}
+    </div>
+
+    <div class="flex items-center gap-1.5">
+      <button
+        id="theme-toggle"
+        class="theme-toggle w-10 h-10 grid place-items-center rounded-lg hover:bg-[color:var(--surface-2)] transition-colors"
+        aria-label="Toggle theme"
+      >
+        <Icon name="moon" class="w-5 h-5" id="theme-icon" />
+      </button>
+
+      <a
+        href={site.links.resume}
+        target="_blank"
+        rel="noopener"
+        class="hidden sm:inline-flex btn btn-ghost !py-2 !px-3.5 text-sm"
+      >
+        Résumé
       </a>
 
-      <!-- Desktop links -->
-      <ul class="hidden md:flex items-center gap-1">
-        {
-          nav.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="px-3 py-2 rounded-lg text-sm text-[color:var(--color-fg-muted)] hover:text-fg hover:bg-white/5 transition-colors"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-
-      <div class="flex items-center gap-2">
-        <a href={site.links.resume} target="_blank" rel="noopener" class="hidden sm:inline-flex btn btn-ghost !py-2 !px-3.5 text-sm">
-          Résumé
-        </a>
-        <a href="#contact" class="hidden sm:inline-flex btn btn-primary !py-2 !px-4 text-sm">Get in touch</a>
-
-        <!-- Mobile hamburger -->
-        <button
-          id="menu-btn"
-          class="md:hidden w-10 h-10 grid place-items-center rounded-lg text-fg hover:bg-white/5 transition-colors"
-          aria-label="Open menu"
-          aria-expanded="false"
-          aria-controls="mobile-menu"
-        >
-          <Icon name="menu" class="w-6 h-6" id="menu-icon" />
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile menu panel -->
-    <div id="mobile-menu" class="md:hidden hidden mt-2 glass glass-blur rounded-2xl p-2">
-      <ul class="flex flex-col">
-        {
-          nav.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="menu-link block px-4 py-3 rounded-xl text-[color:var(--color-fg-muted)] hover:text-fg hover:bg-white/5 transition-colors"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
-        <li class="grid grid-cols-2 gap-2 mt-2 px-1 pb-1">
-          <a href={site.links.resume} target="_blank" rel="noopener" class="menu-link btn btn-ghost !py-2.5 text-sm">Résumé</a>
-          <a href="#contact" class="menu-link btn btn-primary !py-2.5 text-sm">Get in touch</a>
-        </li>
-      </ul>
+      <button
+        id="menu-btn"
+        class="md:hidden w-10 h-10 grid place-items-center rounded-lg hover:bg-[color:var(--surface-2)] transition-colors"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Icon name="menu" class="w-6 h-6" id="menu-icon" />
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden hidden border-t" style="border-color:var(--border);">
+    <div class="mx-auto max-w-5xl px-5 py-3 flex flex-col">
+      {
+        nav.map((item) => (
+          <a href={item.href} class="menu-link py-3 text-[color:var(--muted)] hover:text-[color:var(--text)] transition-colors">
+            {item.label}
+          </a>
+        ))
+      }
+      <a href={site.links.resume} target="_blank" rel="noopener" class="menu-link btn btn-ghost mt-3">Résumé</a>
+    </div>
+  </div>
 </header>
 
 <script>
+  // Theme toggle
+  const themeBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const sun = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  const moon = '<path d="M20 13.4A8 8 0 1 1 10.6 4a6.5 6.5 0 0 0 9.4 9.4z"/>';
+
+  const syncIcon = () => {
+    const light = document.documentElement.dataset.theme === 'light';
+    if (themeIcon) themeIcon.innerHTML = light ? sun : moon;
+  };
+  syncIcon();
+
+  themeBtn?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch (e) {}
+    syncIcon();
+  });
+
+  // Mobile menu
   const btn = document.getElementById('menu-btn');
   const menu = document.getElementById('mobile-menu');
   const icon = document.getElementById('menu-icon');
-
   const setOpen = (open: boolean) => {
-    if (!menu || !btn) return;
-    menu.classList.toggle('hidden', !open);
-    btn.setAttribute('aria-expanded', String(open));
-    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    // swap hamburger <-> X
+    menu?.classList.toggle('hidden', !open);
+    btn?.setAttribute('aria-expanded', String(open));
+    btn?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     if (icon) {
-      icon.innerHTML = open
-        ? '<path d="M6 6l12 12M18 6L6 18"/>'
-        : '<path d="M4 7h16M4 12h16M4 17h16"/>';
+      icon.innerHTML = open ? '<path d="M6 6l12 12M18 6L6 18"/>' : '<path d="M4 7h16M4 12h16M4 17h16"/>';
     }
   };
-
   btn?.addEventListener('click', () => setOpen(menu?.classList.contains('hidden') ?? true));
-
-  // Close after tapping a link
-  document.querySelectorAll('#mobile-menu .menu-link').forEach((a) =>
-    a.addEventListener('click', () => setOpen(false))
-  );
-
-  // Close if resized up to desktop
+  document.querySelectorAll('#mobile-menu .menu-link').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 768) setOpen(false);
   });

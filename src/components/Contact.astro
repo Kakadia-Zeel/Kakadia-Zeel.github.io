@@ -1,52 +1,26 @@
 ---
 import { site, sections } from '../data/site';
 import Icon from './Icon.astro';
-import SectionHeader from './SectionHeader.astro';
 const s = sections.contact;
 ---
 
-<section id="contact" class="py-20 sm:py-28">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="glass rounded-3xl p-6 sm:p-10 lg:p-14 overflow-hidden relative text-center">
-      <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl opacity-40 pointer-events-none"
-        style="background:radial-gradient(circle,rgba(251, 113, 133,.5),transparent 60%);"></div>
-      <div class="absolute -bottom-28 -left-24 w-72 h-72 rounded-full blur-3xl opacity-30 pointer-events-none"
-        style="background:radial-gradient(circle,rgba(251, 191, 36,.4),transparent 60%);"></div>
+<section id="contact" class="py-24 sm:py-32 border-t" style="border-color:var(--border);">
+  <div class="mx-auto max-w-5xl px-5 sm:px-6 text-center">
+    <div class="reveal max-w-2xl mx-auto">
+      <span class="kicker">{s.kicker}</span>
+      <h2 class="mt-4 text-3xl sm:text-5xl font-semibold">{s.title}</h2>
+      <p class="mt-4 muted text-lg leading-relaxed">{s.desc}</p>
 
-      <div class="relative max-w-2xl mx-auto flex flex-col items-center">
-        <div class="reveal flex flex-col items-center">
-          <span class="kicker justify-center">{s.kicker}</span>
-          <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">{s.title}</h2>
-          <p class="mt-4 text-[color:var(--color-fg-muted)] text-base sm:text-lg leading-relaxed">{s.desc}</p>
-        </div>
+      <a href={`mailto:${site.email}`} class="btn btn-primary mt-8">
+        <Icon name="mail" class="w-4 h-4" /> Email me
+      </a>
 
-        <!-- Primary email CTA -->
-        <a href={`mailto:${site.email}`} class="reveal btn btn-primary mt-8 !px-6">
-          <Icon name="mail" class="w-4 h-4" /> Email me
-        </a>
-        <a href={`mailto:${site.email}`} class="reveal mt-3 text-sm font-mono text-[color:var(--color-fg-muted)] hover:text-fg transition-colors break-all">
-          {site.email}
-        </a>
-
-        <!-- Social links -->
-        <div class="reveal mt-6 flex flex-wrap items-center justify-center gap-3">
-          <a aria-label="GitHub" href={site.links.github} target="_blank" rel="noopener"
-            class="glass glass-hover spotlight rounded-xl px-4 py-3 flex items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
-            <Icon name="github" class="w-5 h-5" /><span class="text-sm font-mono">GitHub</span>
-          </a>
-          <a aria-label="LinkedIn" href={site.links.linkedin} target="_blank" rel="noopener"
-            class="glass glass-hover spotlight rounded-xl px-4 py-3 flex items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
-            <Icon name="linkedin" class="w-5 h-5" /><span class="text-sm font-mono">LinkedIn</span>
-          </a>
-          <a aria-label="LeetCode" href={site.links.leetcode} target="_blank" rel="noopener"
-            class="glass glass-hover spotlight rounded-xl px-4 py-3 flex items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
-            <Icon name="leetcode" class="w-5 h-5" /><span class="text-sm font-mono">LeetCode</span>
-          </a>
-          <a aria-label="Résumé" href={site.links.resume} target="_blank" rel="noopener"
-            class="glass glass-hover spotlight rounded-xl px-4 py-3 flex items-center gap-2 text-[color:var(--color-fg-muted)] hover:text-fg">
-            <Icon name="download" class="w-5 h-5" /><span class="text-sm font-mono">Résumé</span>
-          </a>
-        </div>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-sm">
+        <a href={`mailto:${site.email}`} class="ulink">{site.email}</a>
+        <a href={site.links.github} target="_blank" rel="noopener" class="ulink">GitHub</a>
+        <a href={site.links.linkedin} target="_blank" rel="noopener" class="ulink">LinkedIn</a>
+        <a href={site.links.leetcode} target="_blank" rel="noopener" class="ulink">LeetCode</a>
+        <a href={site.links.resume} target="_blank" rel="noopener" class="ulink">Résumé</a>
       </div>
     </div>
   </div>

@@ -1,93 +1,61 @@
 ---
 import { experience, sections } from '../data/site';
-import Icon from './Icon.astro';
 import SectionHeader from './SectionHeader.astro';
 const s = sections.experience;
 ---
 
-<section id="experience" class="py-20 sm:py-28">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+<section id="experience" class="py-20 sm:py-28 border-t" style="border-color:var(--border);">
+  <div class="mx-auto max-w-5xl px-5 sm:px-6">
     <SectionHeader kicker={s.kicker} title={s.title} desc={s.desc} />
 
     {
       experience.map((job) => (
         <div class="mt-12">
           {/* Company header */}
-          <div class="glass spotlight rounded-2xl p-6 sm:p-8 reveal">
-            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-              <div class="flex items-center gap-4">
-                <div
-                  class="w-14 h-14 rounded-xl grid place-items-center font-mono font-bold text-lg shrink-0 accent-text"
-                  style="background:var(--color-ink-850);border:1px solid rgba(255,255,255,.1);"
-                >
-                  {job.company
-                    .split(' ')
-                    .map((w) => w[0])
-                    .join('')}
-                </div>
-                <div>
-                  <h3 class="text-xl sm:text-2xl font-bold text-fg">{job.company}</h3>
-                  <p class="text-[color:var(--color-accent-blue)] font-medium">{job.role}</p>
-                </div>
-              </div>
-              <div class="flex sm:flex-col sm:items-end gap-2 sm:gap-1">
-                <span class="chip !text-[color:var(--color-fg-muted)]">{job.period}</span>
-                <span class="text-xs text-[color:var(--color-fg-dim)] font-mono sm:mr-1">{job.type}</span>
-              </div>
+          <div class="reveal flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+            <div>
+              <h3 class="text-2xl font-semibold font-display">{job.company}</h3>
+              <p class="accent font-medium mt-0.5">{job.role}</p>
             </div>
-            <p class="mt-5 text-[color:var(--color-fg-muted)] leading-relaxed max-w-3xl">{job.summary}</p>
+            <p class="dim text-sm">
+              {job.period} · {job.type}
+            </p>
           </div>
+          <p class="reveal mt-4 muted leading-relaxed max-w-3xl">{job.summary}</p>
 
           {/* Work areas — point-wise with explanations */}
-          <div class="mt-5 space-y-4">
+          <div class="mt-10 space-y-10">
             {job.areas.map((area, i) => (
-              <div class="glass glass-hover spotlight rounded-2xl p-6 sm:p-7 reveal">
-                <div class="flex items-center gap-3">
-                  <span class="font-mono text-sm text-[color:var(--color-fg-dim)]">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span
-                    class="w-10 h-10 rounded-lg grid place-items-center text-[color:var(--color-accent-cyan)] shrink-0"
-                    style="background:rgba(251, 191, 36,.08);border:1px solid rgba(251, 191, 36,.2);"
-                  >
-                    <Icon name={area.icon} class="w-5 h-5" />
-                  </span>
-                  <h4 class="text-lg font-semibold text-fg">{area.title}</h4>
-                </div>
+              <div class="reveal grid sm:grid-cols-[auto_1fr] gap-x-6 gap-y-3 pt-8 border-t" style="border-color:var(--border);">
+                <span class="hidden sm:block dim font-display text-sm pt-1">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <h4 class="text-xl font-semibold font-display">{area.title}</h4>
+                  <p class="mt-2 muted leading-relaxed">{area.explain}</p>
 
-                {/* Explanation of the problem + what I did */}
-                <p class="mt-4 text-[color:var(--color-fg-muted)] leading-relaxed">{area.explain}</p>
-
-                {/* Point-wise details */}
-                <ul class="mt-4 space-y-2.5">
-                  {area.points.map((point) => (
-                    <li class="flex gap-3 text-sm sm:text-base text-[color:var(--color-fg-muted)] leading-relaxed">
-                      <span
-                        class="mt-2 h-1.5 w-1.5 rounded-full shrink-0"
-                        style="background:linear-gradient(120deg,var(--color-accent-cyan),var(--color-accent-violet));"
-                      />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* In-context metrics with count-up */}
-                {area.metrics.length > 0 && (
-                  <div class="mt-5 flex flex-wrap gap-3">
-                    {area.metrics.map((m) => (
-                      <div class="rounded-xl px-4 py-2.5" style="background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);">
-                        <div class="text-xl font-bold accent-text font-mono">
-                          {'num' in m ? (
-                            <span class="count" data-count={m.num} data-suffix={m.suffix}>0{m.suffix}</span>
-                          ) : (
-                            m.text
-                          )}
-                        </div>
-                        <div class="text-xs text-[color:var(--color-fg-dim)] mt-0.5">{m.label}</div>
-                      </div>
+                  <ul class="mt-4 space-y-2">
+                    {area.points.map((point) => (
+                      <li class="flex gap-3 muted leading-relaxed">
+                        <span class="accent mt-0.5 select-none">—</span>
+                        <span>{point}</span>
+                      </li>
                     ))}
-                  </div>
-                )}
+                  </ul>
+
+                  {area.metrics.length > 0 && (
+                    <div class="mt-5 flex flex-wrap gap-x-10 gap-y-4">
+                      {area.metrics.map((m) => (
+                        <div>
+                          <div class="text-2xl font-semibold font-display accent">
+                            {'num' in m ? `${m.num}${m.suffix}` : m.text}
+                          </div>
+                          <div class="dim text-sm mt-0.5">{m.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
