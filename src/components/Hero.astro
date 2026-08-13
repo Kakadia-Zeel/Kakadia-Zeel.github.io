@@ -3,30 +3,33 @@ import { site } from '../data/site';
 import Icon from './Icon.astro';
 ---
 
-<section id="top" class="min-h-[92vh] flex flex-col justify-center pt-28 pb-16">
-  <div class="mx-auto max-w-5xl px-5 sm:px-6 w-full">
+<section id="top" class="min-h-[82vh] flex flex-col justify-center pt-28 pb-16">
+  <div class="mx-auto max-w-6xl px-5 sm:px-6 w-full">
     <div class="reveal">
       {
         site.available && (
-          <span class="inline-flex items-center gap-2 text-sm muted mb-8">
+          <span
+            class="inline-flex items-center gap-2 text-sm font-medium mb-6 px-3.5 py-1.5 rounded-full"
+            style="background:color-mix(in srgb, var(--accent) 12%, transparent); border:1px solid color-mix(in srgb, var(--accent) 32%, transparent);"
+          >
             <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style="background:var(--accent);" />
-              <span class="relative inline-flex rounded-full h-2 w-2" style="background:var(--accent);" />
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-70" style="background:#34d399;" />
+              <span class="relative inline-flex rounded-full h-2 w-2" style="background:#34d399;" />
             </span>
             Available for opportunities
           </span>
         )
       }
 
-      <h1 class="font-display font-semibold tracking-tight text-5xl sm:text-7xl lg:text-[5.5rem] leading-[1.02]">
-        Zeel Kakadia
+      <h1 class="font-display font-semibold tracking-[-0.03em] text-5xl sm:text-6xl lg:text-7xl leading-[1.0]">
+        <span class="name-gradient">Zeel Kakadia</span>
       </h1>
 
-      <p class="mt-6 text-xl sm:text-2xl font-display text-[color:var(--text)]">
-        Backend Engineer <span class="accent">→</span> AI / ML
+      <p class="mt-5 text-xl sm:text-2xl font-display text-[color:var(--text)]">
+        Software Engineer <span class="accent-2">&amp;</span> AI Evaluation
       </p>
 
-      <p class="mt-6 muted text-lg sm:text-xl max-w-2xl leading-relaxed">
+      <p class="mt-5 muted text-base sm:text-lg max-w-2xl leading-relaxed">
         {site.tagline}
       </p>
 
@@ -44,10 +47,16 @@ import Icon from './Icon.astro';
         </a>
       </div>
 
-      <div class="mt-10 flex items-center gap-6 text-sm">
-        <a href={site.links.github} target="_blank" rel="noopener" class="ulink">GitHub</a>
-        <a href={site.links.linkedin} target="_blank" rel="noopener" class="ulink">LinkedIn</a>
-        <a href={site.links.leetcode} target="_blank" rel="noopener" class="ulink">LeetCode</a>
+      <div class="mt-10 flex items-center gap-5 text-sm">
+        <a href={site.links.github} target="_blank" rel="noopener" class="ulink inline-flex items-center gap-2">
+          <Icon name="github" class="w-4 h-4" /> GitHub
+        </a>
+        <a href={site.links.linkedin} target="_blank" rel="noopener" class="ulink inline-flex items-center gap-2">
+          <Icon name="linkedin" class="w-4 h-4" /> LinkedIn
+        </a>
+        <a href={site.links.leetcode} target="_blank" rel="noopener" class="ulink inline-flex items-center gap-2">
+          <Icon name="leetcode" class="w-4 h-4" /> LeetCode
+        </a>
       </div>
     </div>
   </div>

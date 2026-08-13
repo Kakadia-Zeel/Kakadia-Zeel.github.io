@@ -1,0 +1,20 @@
+---
+import { education } from '../data/site';
+---
+
+<section id="education" class="py-20 sm:py-28 border-t" style="border-color:var(--border);">
+  <div class="mx-auto max-w-6xl px-5 sm:px-6">
+    <div class="reveal">
+      <span class="kicker">Education</span>
+    </div>
+
+    <div class="reveal mt-8 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 max-w-3xl">
+      <div>
+        <h3 class="text-2xl font-semibold font-display">{education.school}</h3>
+        <p class="gradient-text font-semibold mt-1 inline-block">{education.degree}</p>
+        <p class="mt-2 muted">{education.detail}</p>
+      </div>
+      <p class="dim text-sm shrink-0">{education.period}</p>
+    </div>
+  </div>
+</section>

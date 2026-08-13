@@ -5,22 +5,32 @@ const s = sections.contact;
 ---
 
 <section id="contact" class="py-24 sm:py-32 border-t" style="border-color:var(--border);">
-  <div class="mx-auto max-w-5xl px-5 sm:px-6 text-center">
+  <div class="mx-auto max-w-6xl px-5 sm:px-6 text-center">
     <div class="reveal max-w-2xl mx-auto">
       <span class="kicker">{s.kicker}</span>
-      <h2 class="mt-4 text-3xl sm:text-5xl font-semibold">{s.title}</h2>
+      <h2 class="mt-4 text-3xl sm:text-5xl font-semibold gradient-text">{s.title}</h2>
       <p class="mt-4 muted text-lg leading-relaxed">{s.desc}</p>
 
       <a href={`mailto:${site.email}`} class="btn btn-primary mt-8">
         <Icon name="mail" class="w-4 h-4" /> Email me
       </a>
 
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-sm">
-        <a href={`mailto:${site.email}`} class="ulink">{site.email}</a>
-        <a href={site.links.github} target="_blank" rel="noopener" class="ulink">GitHub</a>
-        <a href={site.links.linkedin} target="_blank" rel="noopener" class="ulink">LinkedIn</a>
-        <a href={site.links.leetcode} target="_blank" rel="noopener" class="ulink">LeetCode</a>
-        <a href={site.links.resume} target="_blank" rel="noopener" class="ulink">Résumé</a>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm">
+        <a href={`mailto:${site.email}`} class="ulink inline-flex items-center gap-2">
+          <Icon name="mail" class="w-4 h-4" /> {site.email}
+        </a>
+        <a href={site.links.github} target="_blank" rel="noopener" class="ulink inline-flex items-center gap-2">
+          <Icon name="github" class="w-4 h-4" /> GitHub
+        </a>
+        <a href={site.links.linkedin} target="_blank" rel="noopener" class="ulink inline-flex items-center gap-2">
+          <Icon name="linkedin" class="w-4 h-4" /> LinkedIn
+        </a>
+        <a href={site.links.leetcode} target="_blank" rel="noopener" class="ulink inline-flex items-center gap-2">
+          <Icon name="leetcode" class="w-4 h-4" /> LeetCode
+        </a>
+        <a href={site.links.resume} target="_blank" rel="noopener" class="ulink inline-flex items-center gap-2">
+          <Icon name="download" class="w-4 h-4" /> Résumé
+        </a>
       </div>
     </div>
   </div>

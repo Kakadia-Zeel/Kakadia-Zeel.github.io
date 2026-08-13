@@ -14,30 +14,38 @@
 /* ---------------------------------------------------------------- */
 :root {
   color-scheme: dark;
-  --bg: #0b0b0e;
-  --surface: #141418;
-  --surface-2: #1b1b20;
-  --border: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --text: #ededf0;
-  --muted: #a1a1aa;
-  --dim: #6c6c76;
-  --accent: #f5b13d;
-  --accent-ink: #0b0b0e;
+  --bg: #0a0b10;
+  --surface: #14161e;
+  --surface-2: #1c1f29;
+  --border: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.17);
+  --text: #eef0f4;
+  --muted: #a2a6b3;
+  --dim: #6b7080;
+  --accent: #8ec5fc;      /* sky blue */
+  --accent-2: #dcc0ff;    /* lavender */
+  --accent-ink: #000000;  /* black text on the light gradient fills */
+  /* gradient stops — blue → lavender, tuned for a dark background */
+  --grad-1: #8ec5fc;
+  --grad-2: #e0c3ff;
 }
 
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #faf9f7;
+  --bg: #f5f7fc;
   --surface: #ffffff;
-  --surface-2: #f3f2ee;
-  --border: rgba(0, 0, 0, 0.10);
-  --border-strong: rgba(0, 0, 0, 0.18);
-  --text: #18181b;
-  --muted: #55555e;
-  --dim: #9a9aa2;
-  --accent: #b9770c;
-  --accent-ink: #ffffff;
+  --surface-2: #eef2fa;
+  --border: rgba(30, 41, 59, 0.12);
+  --border-strong: rgba(30, 41, 59, 0.20);
+  --text: #1a1c26;
+  --muted: #51566b;
+  --dim: #8b90a3;
+  --accent: #2563eb;      /* blue-600 for links / labels */
+  --accent-2: #7c3aed;    /* violet-600 (gradient end accent) */
+  --accent-ink: #ffffff;  /* white text on the deeper gradient fills */
+  /* visible blue → soft-violet sweep (mirrors dark's blue → lavender) */
+  --grad-1: #2563eb;      /* blue-600 */
+  --grad-2: #8b5cf6;      /* violet-500 */
 }
 
 /* ---------------------------------------------------------------- */
@@ -59,6 +67,19 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+/* Subtle two-tone depth so the dark isn't flat (adapts to theme) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(42rem 32rem at 6% -8%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 60%),
+    radial-gradient(40rem 30rem at 100% 0%, color-mix(in srgb, var(--accent-2) 14%, transparent), transparent 55%),
+    radial-gradient(50rem 40rem at 50% 108%, color-mix(in srgb, var(--accent-2) 8%, transparent), transparent 60%);
+}
+
 h1, h2, h3, h4, .font-display {
   font-family: var(--font-display);
   letter-spacing: -0.02em;
@@ -70,9 +91,11 @@ h1, h2, h3, h4, .font-display {
   color: var(--text);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 /* ---------------------------------------------------------------- */
@@ -82,6 +105,29 @@ a {
   .muted { color: var(--muted); }
   .dim { color: var(--dim); }
   .accent { color: var(--accent); }
+  .accent-2 { color: var(--accent-2); }
+
+  /* rich gradient for focal text (headings) — stops adapt to theme */
+  .gradient-text {
+    background: linear-gradient(105deg, var(--grad-1), var(--grad-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* distinctive animated gradient — reserved for the hero name */
+  .name-gradient {
+    background: linear-gradient(100deg, var(--grad-1), var(--grad-2) 50%, var(--grad-1));
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: nameShift 9s ease-in-out infinite;
+  }
+  @keyframes nameShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
 
   .card {
     background: var(--surface);
@@ -116,8 +162,9 @@ a {
     cursor: pointer;
   }
   .btn-primary {
-    background: var(--accent);
+    background: linear-gradient(100deg, var(--grad-1), var(--grad-2));
     color: var(--accent-ink);
+    font-weight: 600;
   }
   .btn-primary:hover {
     transform: translateY(-1px);
@@ -135,41 +182,44 @@ a {
   .tag {
     display: inline-flex;
     align-items: center;
-    padding: 0.35rem 0.8rem;
+    gap: 0.45rem;
+    padding: 0.4rem 0.85rem;
     border-radius: 9999px;
-    border: 1px solid var(--border);
+    font-size: 0.82rem;
+    font-weight: 500;
     color: var(--muted);
-    font-size: 0.85rem;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+  .tag::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 9999px;
+    flex: none;
+    background: linear-gradient(var(--grad-1), var(--grad-2));
   }
   .tag:hover {
     color: var(--text);
-    border-color: var(--border-strong);
+    background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+    border-color: color-mix(in srgb, var(--accent) 42%, transparent);
+    transform: translateY(-1px);
   }
 
-  /* animated underline for text links */
+  /* text link → fills with a subtle pill background on hover */
   .ulink {
-    position: relative;
     color: var(--muted);
-    transition: color 0.2s ease;
-  }
-  .ulink::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
+    padding: 0.4rem 0.7rem;
+    border-radius: 0.55rem;
+    transition: color 0.2s ease, background-color 0.2s ease;
   }
   .ulink:hover {
-    color: var(--text);
+    color: var(--accent-ink);
+    background: linear-gradient(100deg, var(--grad-1), var(--grad-2));
   }
-  .ulink:hover::after {
-    transform: scaleX(1);
+  .ulink:hover svg {
+    color: var(--accent-ink);
   }
 }
 
@@ -191,11 +241,72 @@ a {
   transition: transform 0.35s ease;
 }
 
+/* Mobile menu links share the gradient hover */
+.menu-link:hover {
+  color: var(--accent-ink);
+  background: linear-gradient(100deg, var(--grad-1), var(--grad-2));
+}
+
+/* Timeline */
+.tl-rail {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2) 45%, transparent);
+  opacity: 0.55;
+}
+.tl-node {
+  background: var(--bg);
+  border: 2px solid color-mix(in srgb, var(--accent) 65%, var(--border));
+  transition: transform 0.25s ease;
+}
+.tl-node.is-current {
+  background: linear-gradient(var(--grad-1), var(--grad-2));
+  border-color: transparent;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 13%, transparent);
+}
+.tl-node.is-current::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: tlpulse 2.6s ease-out infinite;
+}
+@keyframes tlpulse {
+  0% { opacity: 0.6; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+.tl-period {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+/* Navbar: transparent at top, subtly elevates on scroll (minimal effect) */
+.site-nav {
+  background: color-mix(in srgb, var(--bg) 24%, transparent);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.site-nav.is-scrolled {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border-bottom-color: var(--border);
+  box-shadow: 0 10px 30px -20px rgba(0, 0, 0, 0.55);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   body { transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .card-hover:hover, .btn:hover { transform: none; }
+  .name-gradient { animation: none; }
+  .tl-node.is-current::after { animation: none; }
 }
 
 /* Focus ring */

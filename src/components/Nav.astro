@@ -3,17 +3,14 @@ import { site, nav } from '../data/site';
 import Icon from './Icon.astro';
 ---
 
-<header
-  class="fixed top-0 inset-x-0 z-50"
-  style="background:color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--border);"
->
-  <nav class="mx-auto max-w-5xl px-5 sm:px-6 h-16 flex items-center justify-between">
-    <a href="#top" class="font-display font-semibold tracking-tight text-[1.05rem]">
-      Zeel Kakadia<span class="accent">.</span>
+<header class="site-nav fixed top-0 inset-x-0 z-50">
+  <nav class="mx-auto max-w-6xl px-5 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="font-display font-semibold tracking-tight text-lg sm:text-xl">
+      Zeel Kakadia<span class="accent-2">.</span>
     </a>
 
     <!-- Desktop links -->
-    <div class="hidden md:flex items-center gap-7 text-sm">
+    <div class="hidden md:flex items-center gap-1 text-[0.98rem] font-medium">
       {nav.map((item) => <a href={item.href} class="ulink">{item.label}</a>)}
     </div>
 
@@ -49,10 +46,10 @@ import Icon from './Icon.astro';
 
   <!-- Mobile menu -->
   <div id="mobile-menu" class="md:hidden hidden border-t" style="border-color:var(--border);">
-    <div class="mx-auto max-w-5xl px-5 py-3 flex flex-col">
+    <div class="mx-auto max-w-6xl px-5 py-3 flex flex-col">
       {
         nav.map((item) => (
-          <a href={item.href} class="menu-link py-3 text-[color:var(--muted)] hover:text-[color:var(--text)] transition-colors">
+          <a href={item.href} class="menu-link px-3 py-3 rounded-lg text-base font-medium text-[color:var(--muted)] transition-colors">
             {item.label}
           </a>
         ))
@@ -63,6 +60,12 @@ import Icon from './Icon.astro';
 </header>
 
 <script>
+  // Navbar elevate-on-scroll (minimal effect)
+  const header = document.querySelector('.site-nav');
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
   // Theme toggle
   const themeBtn = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');

@@ -6,9 +6,9 @@
 
 export const site = {
   name: 'Zeel Kakadia',
-  role: 'Backend Engineer → AI/ML',
+  role: 'Software & AI Evaluation Engineer',
   tagline:
-    'I build reliable, high-performance backend & data systems — now applying that same rigor to AI/ML.',
+    'Software engineer with 4+ years shipping production backend systems in Java & Spring Boot — the kind of work where correctness, performance and clean migrations matter. I’ve since moved into frontier-AI evaluation: authoring the statistical evals and data that benchmark leading models, and leading a 30-person eval team. Same engineering rigor, applied to both — and I’m open to software and AI-evaluation opportunities.',
   location: 'India · Open to remote',
   available: true,
   email: 'zeelkakadia.work@gmail.com',
@@ -17,8 +17,8 @@ export const site = {
   // ---- Links (from resume). TODO: replace with your exact profile URLs. ----
   links: {
     github: 'https://github.com/Kakadia-Zeel',
-    linkedin: 'https://www.linkedin.com/in/zeelkakadia', // TODO confirm handle
-    leetcode: 'https://leetcode.com/zeelkakadia', // TODO confirm handle
+    linkedin: 'https://www.linkedin.com/in/zeel-kakadia/',
+    leetcode: 'https://leetcode.com/u/kakadia_zeel/',
     resume: '/resume.pdf',
   },
 
@@ -28,10 +28,12 @@ export const site = {
 
 // ---- Skill groups ---------------------------------------------------------
 export const skillGroups = [
-  { title: 'Languages & Frameworks', items: ['Java', 'Spring Boot', 'REST APIs', 'JUnit'] },
+  { title: 'Languages', items: ['Java', 'Python', 'R', 'Julia', 'SQL'] },
+  { title: 'Backend & Frameworks', items: ['Spring Boot', 'REST APIs', 'Microservices', 'JUnit'] },
   { title: 'Data & Storage', items: ['MySQL', 'Neo4j (Cypher)', 'Redis', 'OpenSearch', 'MinIO', 'Flyway'] },
   { title: 'Infra & DevOps', items: ['Docker', 'Kubernetes', 'Kafka', 'GitHub Actions', 'CI/CD'] },
-  { title: 'AI / ML & Data', items: ['GenAI pipelines', 'Snorkel', 'Abundant', 'Data labeling & eval', 'RAG data prep'] },
+  { title: 'AI Evaluation', items: ['LLM evaluation', 'Benchmarking', 'Rubric & verifier design', 'Ground-truth oracles', 'Data labeling'] },
+  { title: 'Statistics & Methods', items: ['Survival analysis', 'Causal inference', 'Mixed-effects models', 'Bayesian methods', 'Conformal prediction'] },
 ];
 
 // Flat list for the scrolling tech marquee under the hero.
@@ -46,10 +48,84 @@ export const techMarquee = [
 // ---------------------------------------------------------------------------
 export const experience = [
   {
+    company: 'Snorkel AI',
+    mark: 'Sn',
+    via: 'Syncrope', // engaged through Syncrope
+    url: 'https://snorkel.ai',
+    role: 'AI Evaluation Engineer · Team Lead',
+    period: 'May 2026 — Present',
+    type: 'Contract',
+    current: true,
+    highlight: 'Led a 30-person authoring team',
+    summary:
+      'Contracted through Syncrope to build and review evaluation tasks that benchmark frontier AI across data-science, ML and software-engineering domains.',
+    tags: ['LLM Evaluation', 'Benchmarking', 'Team Leadership', 'Rubric Design', 'Quality Review', 'Multi-domain'],
+    points: [
+      'Lead a 30-person team authoring high-quality evaluation tasks — owning planning, review cadence and the quality bar.',
+      'Author evaluation tasks spanning data-science, machine-learning and software-engineering domains.',
+      'Reviewer on a large coding-agent evaluation benchmark, upholding correctness and rubric quality across the team’s submissions.',
+      'Contributed physics-domain evaluation tasks on a specialized science track.',
+    ],
+    areas: null,
+  },
+  {
+    company: 'Abundant AI',
+    mark: 'Ab',
+    via: null,
+    url: 'https://abundant.ai',
+    role: 'AI Data & Evaluation Engineer',
+    period: 'Feb 2026 — Present',
+    type: 'Contract',
+    current: true,
+    highlight: 'Owns statistical evals end-to-end · dataset → verifier',
+    summary:
+      'Author self-contained evaluations that benchmark how well AI agents perform real statistical work — each owned end to end: realistic dataset → analysis contract → oracle (ground-truth) solution → verifier and hidden test variants that score the agent.',
+    tags: ['LLM Evaluation', 'Benchmarking', 'Statistical Analysis', 'Verifier Design', 'Ground-truth Oracles'],
+    areas: [
+      {
+        title: 'Data-Science Evaluation Tasks',
+        icon: 'ai',
+        explain:
+          'Authored self-contained statistical evals end to end — framing the dataset and analysis contract, implementing the oracle solution that defines ground truth, and building the scoring verifier plus hidden test variants.',
+        points: [
+          'Authored statistical evals end-to-end, each owned from dataset to verifier — mostly R, with Python/Colab and Julia.',
+          'Survival analysis (Cox PH, Kaplan–Meier), mixed-effects / multilevel models, multiple-testing / FDR, Bayesian & empirical-Bayes shrinkage.',
+          'Econometrics & causal inference (Heckman selection, propensity matching, ordered logit); unsupervised methods (LDA, MDS, EM mixtures, factor analysis); spatial statistics; ML calibration / drift / conformal prediction.',
+        ],
+        metrics: [],
+      },
+      {
+        title: 'Advanced Statistical Tasks — Real-World Data',
+        icon: 'graph',
+        explain:
+          'Built the hardest tier of evaluation tasks on real, canonical datasets — genuine applied statistical analysis, not toy data.',
+        points: [
+          'Built the hardest-tier tasks in R (with some Julia) — survival, panel, econometrics, robust and mixed-effects methods.',
+          'Examples: mortgage-lending data → logistic discrimination; labor-supply data → Heckman selection; investment panels → dynamic panel GMM (Nickell bias).',
+          'Clinical survival data → Cox PH diagnostics + competing risks; overdispersed counts → GAMLSS dispersion modeling; repeated-measures data → mixed-effects / AR(1) / NLME family.',
+        ],
+        metrics: [],
+      },
+      {
+        title: 'Hardware RTL Evaluation Tasks',
+        icon: 'shield',
+        explain:
+          'Authored register-transfer-level (RTL) hardware evaluation tasks for frontier-model benchmarking.',
+        points: ['Built RTL hardware tasks used to benchmark frontier models on hardware-design work.'],
+        metrics: [],
+      },
+    ],
+  },
+  {
     company: 'Aera Technology',
-    role: 'Software Engineer 1',
-    period: 'Jan 2022 — 2025',
+    mark: 'Ae',
+    via: null,
+    url: null,
+    role: 'Software Engineer',
+    period: 'Jan 2022 — Aug 2026',
     type: 'Full-time',
+    current: false,
+    tags: ['Java', 'Spring Boot', 'Neo4j', 'MySQL', 'Kafka', 'Kubernetes', 'CI/CD'],
     // What the company does + my scope — sets honest context.
     summary:
       'Aera builds an enterprise “Decision Intelligence” platform. I worked across its data & backend layer — customer migrations, graph services, platform observability, and the data pipelines that feed its GenAI features.',
@@ -147,7 +223,7 @@ export const sideProjects = [
 export const education = {
   school: 'Gujarat Technological University',
   degree: 'B.Tech, Computer Engineering',
-  period: '2018 — 2022 · Rajkot, Gujarat',
+  period: '2018 — 2022 · Gujarat, India',
   detail: 'CGPA 8.90 / 10',
 };
 
@@ -160,8 +236,8 @@ export const sections = {
   },
   experience: {
     kicker: 'Experience',
-    title: 'What I actually built',
-    desc: 'My work at Aera, broken down area by area — the problem, what I built, and the measurable result. No fluff.',
+    title: 'Career timeline',
+    desc: 'A backend engineer who moved into frontier-AI evaluation — running concurrent AI-data contracts (Abundant, Snorkel) alongside my full-time role at Aera. Most recent first.',
   },
   skills: {
     kicker: 'Toolbox',
@@ -182,9 +258,9 @@ export const sections = {
 
 // ---- Navigation -----------------------------------------------------------
 export const nav = [
-  { label: 'About', href: '#about' },
   { label: 'Experience', href: '#experience' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Education', href: '#education' },
   { label: 'Contact', href: '#contact' },
 ];
