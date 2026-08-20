@@ -53,7 +53,7 @@ export const experience = [
     via: 'Syncrope', // engaged through Syncrope
     url: 'https://snorkel.ai',
     role: 'AI Evaluation Engineer · Team Lead',
-    period: 'May 2026 — Present',
+    period: 'Jun 2026 — Present',
     type: 'Contract',
     current: true,
     highlight: 'Led a 30-person authoring team',
@@ -74,12 +74,12 @@ export const experience = [
     via: null,
     url: 'https://abundant.ai',
     role: 'AI Data & Evaluation Engineer',
-    period: 'Feb 2026 — Present',
+    period: 'Feb 2026 — Jun 2026',
     type: 'Contract',
-    current: true,
-    highlight: 'Owns statistical evals end-to-end · dataset → verifier',
+    current: false,
+    highlight: 'Owned statistical evals end-to-end · dataset → verifier',
     summary:
-      'Author self-contained evaluations that benchmark how well AI agents perform real statistical work — each owned end to end: realistic dataset → analysis contract → oracle (ground-truth) solution → verifier and hidden test variants that score the agent.',
+      'Authored self-contained evaluations that benchmarked how well AI agents perform real statistical work — each owned end to end: realistic dataset → analysis contract → oracle (ground-truth) solution → verifier and hidden test variants that score the agent.',
     tags: ['LLM Evaluation', 'Benchmarking', 'Statistical Analysis', 'Verifier Design', 'Ground-truth Oracles'],
     areas: [
       {
@@ -220,13 +220,6 @@ export const sideProjects = [
   },
 ];
 
-export const education = {
-  school: 'Gujarat Technological University',
-  degree: 'B.Tech, Computer Engineering',
-  period: '2018 — 2022 · Gujarat, India',
-  detail: 'CGPA 8.90 / 10',
-};
-
 // ---- Per-section headers: title + plain-language explanation ---------------
 export const sections = {
   about: {
@@ -237,7 +230,7 @@ export const sections = {
   experience: {
     kicker: 'Experience',
     title: 'Career timeline',
-    desc: 'A backend engineer who moved into frontier-AI evaluation — running concurrent AI-data contracts (Abundant, Snorkel) alongside my full-time role at Aera. Most recent first.',
+    desc: 'A backend engineer who moved into frontier-AI evaluation. Most recent first.',
   },
   skills: {
     kicker: 'Toolbox',
@@ -261,6 +254,5 @@ export const nav = [
   { label: 'Experience', href: '#experience' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
-  { label: 'Education', href: '#education' },
   { label: 'Contact', href: '#contact' },
 ];
